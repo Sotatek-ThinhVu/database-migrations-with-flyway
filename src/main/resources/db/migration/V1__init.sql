@@ -1,0 +1,7 @@
+-- CREATE TABLE IF NOT EXISTS account_authority
+-- (
+--     account_id BIGINT,
+--     PRIMARY KEY(account_id),
+--     authority_name VARCHAR(16),
+--     age INTEGER
+-- );
