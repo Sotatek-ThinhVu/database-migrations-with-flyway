@@ -5,3 +5,8 @@ CREATE TABLE IF NOT EXISTS users
     age bigint not null,
     address varchar(255) not null
 );
+
+CREATE TABLE IF NOT EXISTS role(
+    id serial primary key,
+    name varchar(255) not null
+);
