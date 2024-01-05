@@ -1,0 +1,1 @@
+INSERT INTO Persons (PersonID, LastName, FirstName, Address, City) value (1,'vu','duc thinh','giai phong','ha noi');

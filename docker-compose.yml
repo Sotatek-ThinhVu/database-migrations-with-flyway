@@ -1,6 +1,7 @@
-version: '3.8'
+version: '3.9'
+
 services:
-  db:
+  postgresql:
     container_name: postgres_flyway
     image: postgres:14.1-alpine
     restart: unless-stopped
@@ -13,6 +14,40 @@ services:
       - "5432:5432"
     volumes:
       - db:/var/lib/postgresql/data
+  mysql:
+    container_name: mysql_flyway
+    image: mysql:8.0
+    restart: unless-stopped
+#    env_file: .env
+    environment:
+      #MYSQL_ALLOW_EMPTY_PASSWORD: 'true'
+      #MYSQL_DATABASE: ${MYSQL_DATABASE}
+      #MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-mysql:/var/lib/mysql
+
+#  phpmyadmin:
+#    depends_on:
+#      database:
+#        condition: service_healthy
+#    image: phpmyadmin/phpmyadmin
+#    restart: unless-stopped
+#    ports:
+#      - "8082:80"
+#    env_file: .env
+#    environment:
+#      PMA_HOST: database
+#      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+#    networks:
+#      - spring-network
+
 volumes:
-  db:
-    driver: local
+  db: {}
+  db-mysql: {}
+
+#networks:
+#  spring-network:
+#    driver: bridge
