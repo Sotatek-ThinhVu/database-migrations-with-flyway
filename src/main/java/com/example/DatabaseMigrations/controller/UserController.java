@@ -2,7 +2,9 @@ package com.example.DatabaseMigrations.controller;
 
 
 import com.example.DatabaseMigrations.model.Message;
+import com.example.DatabaseMigrations.model.Person;
 import com.example.DatabaseMigrations.model.User;
+import com.example.DatabaseMigrations.service.PersonService;
 import com.example.DatabaseMigrations.service.UserService;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -14,20 +16,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/user")
 public class UserController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private PersonService personService;
     @PostMapping("")
     public ResponseEntity<?> addUser(@RequestBody User user){
         userService.addUser(user);
         return ResponseEntity.ok(new Message("Oce"));
     }
 
-    @GetMapping("/all")
+    @GetMapping("/user/all")
     public ResponseEntity<List<User>> getAll(){
         List<User> list = userService.getAll();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/person/all")
+    public ResponseEntity<List<Person>> getAllPerson(){
+        List<Person> list = personService.getAll();
         return ResponseEntity.ok(list);
     }
 }

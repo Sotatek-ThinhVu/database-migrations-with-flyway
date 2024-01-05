@@ -1,4 +1,4 @@
-package com.example.DatabaseMigrations.repository;
+package com.example.DatabaseMigrations.repository.postgresql;
 
 import com.example.DatabaseMigrations.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;

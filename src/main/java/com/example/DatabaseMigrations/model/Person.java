@@ -5,17 +5,22 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "users")
-public class User {
+@NoArgsConstructor
+@Table(name = "Persons")
+public class Person {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String fullname;
-    private int age;
-    private String address;
+    private Long PersonID;
+    private String FirstName;
+
+    private String LastName;
+
+    private String City;
+
+    private String Address;
 }

@@ -12,24 +12,27 @@ public class FlywaySlaveInitializer {
 
     private Logger logger = LoggerFactory.getLogger(FlywaySlaveInitializer.class);
 
-    @Value("${firstDatasource.db.url}")
+    @Value("${spring.datasource.postgresql.jdbc-url}")
     String firstDatasourceUrl;
-    @Value("${firstDatasource.db.user}")
+    @Value("${spring.datasource.postgresql.username}")
     String firstDatasourceUser;
-    @Value("${firstDatasource.db.password}")
+    @Value("${spring.datasource.postgresql.password}")
     String firstDatasourcePassword;
 
-    @Value("${firstDatasource.db.locations}")
+    @Value("${spring.datasource.postgresql.flyway.locations}")
     String firstDatasourceLocations;
 
-    @Value("${secondDatasource.db.url}")
+    @Value("${spring.datasource.mysql.jdbc-url}")
     String secondDatasourceUrl;
-    @Value("${secondDatasource.db.user}")
+    @Value("${spring.datasource.mysql.username}")
     String secondDatasourceUser;
-    @Value("${secondDatasource.db.password}")
+    @Value("${spring.datasource.mysql.password}")
     String secondDatasourcePassword;
 
-    @Value("${secondDatasource.db.locations}")
+    @Value("${spring.flyway.enabled}")
+    Boolean onMigrate;
+
+    @Value("${spring.datasource.mysql.flyway.locations}")
     String secondDatasourceLocations;
     @PostConstruct
     public void migrateFlyway() {
@@ -37,16 +40,19 @@ public class FlywaySlaveInitializer {
                 .dataSource(firstDatasourceUrl, firstDatasourceUser, firstDatasourcePassword)
                 .outOfOrder(true)
                 .locations(firstDatasourceLocations)
+                .validateOnMigrate(false)
                 .load();
 
         Flyway flywayPhenom = Flyway.configure()
                 .dataSource(secondDatasourceUrl, secondDatasourceUser, secondDatasourcePassword)
                 .outOfOrder(true)
                 .locations(secondDatasourceLocations)
+                .validateOnMigrate(false)
                 .load();
 
-        flywayIntegration.migrate();
-        flywayPhenom.migrate();
-        logger.info("Run Flywayyyyyyyyyyyyyyyyyyyyyyyyy");
+        if(onMigrate){
+            flywayIntegration.migrate();
+            flywayPhenom.migrate();
+        }
     }
 }

@@ -1,0 +1,1 @@
+UPDATE users SET fullname = 'Tran Anh Tuan1' where id=1;
